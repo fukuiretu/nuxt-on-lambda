@@ -1,6 +1,6 @@
 'use strict'
 
-const { Nuxt } = require('nuxt')
+const { Nuxt } = require('nuxt-edge')
 const express = require('express')
 const config = require('./../nuxt.config.js')
 config.dev = false
@@ -22,7 +22,7 @@ app.use(setHeaders)
 const BASE_URL = process.env.BASE_URL
 const REGEXP_BASE_URL = new RegExp(`^${BASE_URL}`)
 const BASE_URL_TO_BE_ADDED = BASE_URL.replace(/\/$/, '')
-const buildPath = (originalPath) => {
+const buildPath = originalPath => {
   if (REGEXP_BASE_URL.test(originalPath) === true) {
     return originalPath
   }
@@ -33,7 +33,6 @@ const nuxt = new Nuxt(config)
 
 app.use((req, res, next) => {
   req.url = buildPath(req.url)
-  console.log('Request URL: ', req.url)
 
   nuxt.render(req, res, next)
 })

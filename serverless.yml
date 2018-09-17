@@ -8,7 +8,7 @@ provider:
   runtime: nodejs8.10
   region: ap-northeast-1
   stage: ${self:custom.STAGE}
-  profile: my   # awsのcredential名 複数持っていないなら記述不要
+  profile: serverless-training
 
 custom:
   NAME: nuxt-on-lambda
@@ -16,41 +16,12 @@ custom:
   BASE_URL: ${file(./configs/env.js):exporter.BASE_URL}
   ENDPOINT_ENV: ${file(./configs/env.js):exporter.ENDPOINT_ENV}
 
-# 少しでもデプロイのパッケージファイルを少なくする
 package:
-  excludeDevDependencies: true
   exclude:
-    - .**
-    - .**/*
     - app/**
-    - LICENSE
-    - README.md
-    - package.json
-    - yarn.lock
-    # Node.js 上で使われないモジュール
-    # 重いものを優先的に除外
-    - node_modules/babel**/**
-    - node_modules/caniuse-db/**
-    - node_modules/caniuse-lite/**
-    - node_modules/prettier/**
-    - node_modules/yargs/**
-    - node_modules/postcss**/**
-    - node_modules/cssnano/**
-    - node_modules/xxhashjs/**
-    - node_modules/jschardet/**
-    - node_modules/**/*.md
-    - node_modules/**/bin/**
-  include:
-    - server/**
-    - configs/**
-    - nuxt.config.js
-    - node_modules/postcss/**
-    - node_modules/postcss-cssnext/**
-    - node_modules/postcss-import/**
-    - node_modules/postcss-import-resolver/**
-    - node_modules/postcss-loader/**
-    - node_modules/postcss-url/**
 
+  include:
+    - serverless.yml
 
 functions:
   handler:
@@ -62,9 +33,8 @@ functions:
       ENDPOINT_ENV: ${self:custom.ENDPOINT_ENV}
     events:
       - http:
-          path: '/'
+          path: "/"
           method: get
       - http:
-          path: '{proxy+}'
+          path: "{proxy+}"
           method: get
-
