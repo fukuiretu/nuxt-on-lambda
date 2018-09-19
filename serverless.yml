@@ -12,6 +12,7 @@ provider:
 
 plugins:
   - serverless-prune-plugin
+  # - serverless-plugin-warmup
 
 custom:
   prune:
@@ -32,6 +33,7 @@ package:
 functions:
   handler:
     handler: server/handler.handler
+    # warmup: true
     timeout: 30
     memorySize: 128
     environment:

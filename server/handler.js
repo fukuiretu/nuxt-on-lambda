@@ -26,8 +26,15 @@ const binaryMimeTypes = [
   'text/xml'
 ]
 const server = awsServerlessExpress.createServer(app, null, binaryMimeTypes)
-// const server = awsServerlessExpress.createServer(app)
-
+// const server = awsServerlessExpress.createServer(app
 module.exports.handler = (event, context, callback) => {
   awsServerlessExpress.proxy(server, event, context)
 }
+
+// module.exports.lambdaToWarm = function (event, context, callback) {
+//   /** Immediate response for WarmUP plugin */
+//   if (event.source === 'serverless-plugin-warmup') {
+//     console.log('WarmUP - Lambda is warm!')
+//     return callback(null, 'Lambda is warm!')
+//   }
+// }
