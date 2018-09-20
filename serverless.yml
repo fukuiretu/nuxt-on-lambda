@@ -9,10 +9,18 @@ provider:
   region: ap-northeast-1
   stage: ${self:custom.STAGE}
   profile: serverless-training
+  tracing: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - xray:PutTraceSegments # X-Rayにセグメントドキュメントをアップロードする権限を付与する
+        - xray:PutTelemetryRecords # X-Rayにテレメトリをアップロードする権限を付与する
+      Resource: "*"
 
 plugins:
   - serverless-prune-plugin
   # - serverless-plugin-warmup
+  - serverless-plugin-tracing
 
 custom:
   prune:
