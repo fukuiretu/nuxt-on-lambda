@@ -28,7 +28,8 @@ const binaryMimeTypes = [
 const server = awsServerlessExpress.createServer(app, null, binaryMimeTypes)
 // const server = awsServerlessExpress.createServer(app
 module.exports.handler = (event, context, callback) => {
-  awsServerlessExpress.proxy(server, event, context)
+  // awsServerlessExpress.proxy(server, event, context)
+  callback(new Error('This is an error!'))
 }
 
 // module.exports.lambdaToWarm = function (event, context, callback) {
